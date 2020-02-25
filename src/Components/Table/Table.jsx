@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./Table.module.scss";
-import Classnames from "../../Helpers/Classnames";
 const defaultProps = {
   data: [],
   onItemClick: null
 };
 const Table = props => {
+  // get data from props if ecists or from default props
   let { data, onItemClick } = {
     ...defaultProps,
     ...props

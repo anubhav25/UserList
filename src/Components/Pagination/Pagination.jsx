@@ -7,34 +7,39 @@ const defaultProps = {
   currentPage: 0,
   onPageChange: null
 };
+// custom map functin to create a array of n length from callback function
 const customMap = (n, mapper) => {
   let arr = [];
   for (let i = 1; i <= n; i++) {
     arr.push(mapper(i));
   }
   return arr;
-  // return new Array(n).fill(0).map((_,i)=>mapper(i+1))
 };
 
 const Pagination = props => {
+  // get data from props if ecists or from default props
   let { totalItems, itemsperpage, currentPage, onPageChange } = {
     ...defaultProps,
     ...props
   };
+  //convert data to integer
   totalItems = +totalItems;
   itemsperpage = +itemsperpage;
   currentPage = +currentPage;
-
-  if (totalItems < 1 || totalItems < itemsperpage) return null;
-  else {
+  //render only if valid data
+  if (totalItems > 0 && totalItems > itemsperpage) {
+    // calculate total no of pages
     let totalPages = Math.ceil(totalItems / itemsperpage);
+    //conditions to check whether the button should be disabled or not
     let next = currentPage < totalPages;
     let last = currentPage < totalPages;
     let prev = currentPage > 1;
     let first = currentPage > 1;
+    // change page helper func based on condition
     let goto = (p, condition) => () => condition && onPageChange(+p);
 
     if (currentPage > totalPages) {
+      // if invalid page no redirect to page 1
       goto(1, true)();
     }
     return (

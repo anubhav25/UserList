@@ -5,6 +5,7 @@ export default function Header() {
   return (
     <header id="header" className={styles.header}>
       <h1 className={styles.title}>User List</h1>
+      {/* Link to github repo */}
       <a
         className={styles.link}
         href="https://github.com/anubhav25/UserList"
