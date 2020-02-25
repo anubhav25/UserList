@@ -3,6 +3,7 @@ import Pagination from "../Pagination/Pagination";
 import Table from "../Table/Table";
 import Modal from "../Modal/Modal";
 import styles from "./Main.module.scss";
+import loadingImg from "../../assets/loading.gif";
 
 let timeout;
 function debounce(query, data, changeFilteredData, time) {
@@ -27,7 +28,7 @@ function debounce(query, data, changeFilteredData, time) {
 function Main(props) {
   let { getData, page, history } = props;
   // let [page, changePage] = useState(props?.page || 1);
-  let [loading, changeLoading] = useState(true);
+  let [loading, changeLoading] = useState(false);
   let [itemsperpage, changeItemsperpage] = useState(0);
   let [totalItems, changeTotalItems] = useState(0);
   let [data, changeData] = useState([]);
@@ -59,7 +60,11 @@ function Main(props) {
     if (item) changeModalData(item);
   };
   if (loading) {
-    return <>Loading...</>;
+    return (
+      <div className={styles.fallback}>
+        <img src={loadingImg} alt="Loading" />
+      </div>
+    );
   }
   return (
     <div className={styles.container}>

@@ -35,7 +35,7 @@ const Pagination = props => {
     let goto = (p, condition) => () => condition && onPageChange(+p);
 
     if (currentPage > totalPages) {
-      goto(1)();
+      goto(1, true)();
     }
     return (
       <ul className={Classnames(styles.list)}>

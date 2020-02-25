@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter, Redirect } from "react-router-dom";
+import { Route, BrowserRouter, Redirect, Switch } from "react-router-dom";
 
 import "./App.css";
 import Main from "./Components/Main/Main";
@@ -16,7 +16,9 @@ async function getData(p) {
     let res = await fetch(
       `https://reqres.in/api/users?page=${page}&per_page=4`
     );
-    return await res.json();
+    let data = await res.json();
+    cache[page] = data;
+    return data;
   } catch {
     return null;
   }
@@ -25,15 +27,17 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Route
-        path="/:page"
-        render={props => {
-          let page = props?.match?.params?.page;
-          let history = props?.history;
-          return <Main history={history} page={page} getData={getData} />;
-        }}
-      />
-      <Route path="/" render={() => <Redirect to="/1" />} />
+      <Switch>
+        <Route
+          path="/:page"
+          render={props => {
+            let page = props?.match?.params?.page;
+            let history = props?.history;
+            return <Main history={history} page={page} getData={getData} />;
+          }}
+        />
+        <Route path="/" render={() => <Redirect to="/1" />} />
+      </Switch>
     </BrowserRouter>
   );
 }
